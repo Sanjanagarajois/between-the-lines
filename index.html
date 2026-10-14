@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c9f0ef">
+  <meta name="description" content="Discover books and podcasts that match your reading taste with Between the Lines.">
+  <title>Between the Lines — Find Your Next Favorite</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="nav wrap">
+      <a class="brand" href="#" aria-label="Between the Lines home">
+        <span class="brandmark">✳</span>
+        <span>Between the Lines</span>
+      </a>
+
+      <nav class="navright" aria-label="Main navigation">
+        <button class="active" data-view="discover">Discover</button>
+        <button data-view="library">
+          My Bookshelf <span id="libraryCount">0</span>
+        </button>
+        <button data-view="reviews">Reviews</button>
+        <button data-view="community">Reader Community</button>
+        <span class="points-pill" id="pointsNav">0 pts</span>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">A little more you, in every book</div>
+          <h1>Your next favorite<br>is <em>between the lines.</em></h1>
+          <p>
+            Tell us what moves you. Discover stories that feel like they
+            were written just for you, find bookish podcasts, and build
+            a bookshelf that reflects your reading personality.
+          </p>
+        </div>
+
+        <aside class="hero-note">
+          <div class="note-icon">✦</div>
+          <p>“A reader lives a thousand lives before he dies.”</p>
+          <small>— George R. R. Martin</small>
+        </aside>
+      </section>
+
+      <section id="discoverView">
+        <div class="steps" aria-label="Recommendation steps">
+          <span class="step done" id="step1"></span>
+          <span class="step" id="step2"></span>
+          <span class="step" id="step3"></span>
+          <span class="step-label" id="stepLabel">01 / Your reading mood</span>
+        </div>
+
+        <section id="genreStage" class="wizard-page">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">First, the big picture</div>
+              <h2>What worlds do you gravitate toward?</h2>
+              <p>Choose all the genres you reach for. There are no wrong answers.</p>
+            </div>
+            <span class="subtle" id="genreCount">0 selected</span>
+          </div>
+
+          <div class="genre-grid" id="genreGrid"></div>
+
+          <div class="actions">
+            <span class="hint">You can always change these later.</span>
+            <button class="btn primary" id="toDetails" disabled>
+              Next: What You Love ↗
+            </button>
+          </div>
+        </section>
+
+        <section id="detailsStage" class="panel wizard-page hidden">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">02 / Your reading DNA</div>
+              <h2>Tell us what you loved.</h2>
+              <p>Pick a book you've read and the parts that stayed with you.</p>
+            </div>
+            <button class="btn" id="backGenres">← Back</button>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <div class="field">
+                <label for="authorMode">AUTHOR DISCOVERY MODE</label>
+                <select id="authorMode">
+                  <option value="all">All authors</option>
+                  <option value="indian">Indian authors</option>
+                  <option value="international">International authors</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="bookSelect">CHOOSE A BOOK YOU'VE READ</label>
+                <select id="bookSelect">
+                  <option value="">Select a book you've read…</option>
+                </select>
+              </div>
+
+              <div id="bookPreview" class="empty">
+                Your book details will appear here.
+              </div>
+
+              <div class="field spaced">
+                <label for="customBook">CAN'T FIND YOUR BOOK?</label>
+                <input id="customBook" placeholder="Enter the book title">
+              </div>
+
+              <div class="field">
+                <label for="customAuthor">AUTHOR (OPTIONAL)</label>
+                <input id="customAuthor" placeholder="Enter the author's name">
+              </div>
+
+              <button class="btn" id="addBook">＋ Add to My Bookshelf</button>
+            </div>
+
+            <div>
+              <div class="field">
+                <label>WHAT DID YOU LOVE ABOUT IT?</label>
+                <p class="subtle">Choose up to three story elements.</p>
+                <div class="taste-grid" id="tasteGrid"></div>
+              </div>
+
+              <div class="field spaced">
+                <label for="pace">YOUR IDEAL READING PACE</label>
+                <select id="pace">
+                  <option value="any">Depends on the book</option>
+                  <option value="fast">Fast-paced, one-more-chapter</option>
+                  <option value="slow">Slow-burn, let me linger</option>
+                  <option value="balanced">A little of both</option>
+                </select>
+              </div>
+
+              <div class="field spaced">
+                <label for="recommendationType">WHAT WOULD YOU LIKE?</label>
+                <select id="recommendationType">
+                  <option value="books">Book recommendations</option>
+                  <option value="podcasts">Bookish podcasts</option>
+                  <option value="both">Books and podcasts</option>
+                </select>
+              </div>
+
+              <div class="field spaced">
+                <label for="avoid">ANYTHING YOU'D RATHER AVOID?</label>
+                <input id="avoid" placeholder="e.g. love triangles, graphic violence">
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="backGenresBottom">← Back to Genres</button>
+            <button class="btn primary" id="getRecs">Find My Next Read ✦</button>
+          </div>
+        </section>
+
+        <section id="resultsStage" class="panel wizard-page hidden">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">03 / Curated for your kind of story</div>
+              <h2>Your next chapter starts here.</h2>
+              <p id="recIntro">Recommendations picked for your reading taste.</p>
+            </div>
+            <button class="btn" id="editTaste">↻ Refine My Taste</button>
+          </div>
+
+          <div class="recommendations" id="recommendations"></div>
+
+          <div class="actions">
+            <span class="hint">Keep exploring until something catches your eye.</span>
+            <button class="btn primary" id="moreRecs">Show Me More ↗</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="libraryView" class="panel hidden">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Your personal collection</div>
+            <h2>My Bookshelf</h2>
+            <p>Every book you add helps make your recommendations more personal.</p>
+          </div>
+          <button class="btn primary" id="libraryDiscover">＋ Find Books</button>
+        </div>
+        <div class="library-list" id="libraryList"></div>
+      </section>
+
+      <section id="reviewsView" class="panel hidden">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Readers helping readers</div>
+            <h2>Notes from the Margins.</h2>
+            <p>Share your thoughts and earn 10 points for each unique book review.</p>
+          </div>
+        </div>
+
+        <div class="reviews">
+          <form class="review-form" id="reviewForm">
+            <h3>Leave a Little Review</h3>
+
+            <div class="field">
+              <label for="reviewBook">BOOK</label>
+              <select id="reviewBook" required>
+                <option value="">Choose a book…</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>YOUR RATING</label>
+              <div class="stars" id="stars" aria-label="Rate this book"></div>
+            </div>
+
+            <div class="field">
+              <label for="reviewText">WHAT DID YOU THINK?</label>
+              <textarea id="reviewText" required
+                placeholder="What worked for you? Who would you recommend it to?"></textarea>
+            </div>
+
+            <button class="btn primary" type="submit">
+              Share Review · Earn 10 Points ↗
+            </button>
+          </form>
+
+          <div class="review-list">
+            <h3>Community Bookshelf</h3>
+            <div id="reviewList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="communityView" class="panel hidden">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Find your reading people</div>
+            <h2>Readers on Your Wavelength.</h2>
+            <p>Discover readers who share your favourite books and have a similar score.</p>
+          </div>
+        </div>
+
+        <div class="community-score" id="communityScore"></div>
+        <div class="library-list" id="readerMatches"></div>
+        <p class="subtle">
+          Reader matches are illustrative demo profiles. Real connections require a backend.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer wrap">
+      <span>✳ Between the Lines · Made for curious readers</span>
+      <span>Your bookshelf and reviews are saved in this browser.</span>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
